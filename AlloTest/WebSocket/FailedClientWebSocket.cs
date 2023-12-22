@@ -11,7 +11,7 @@ public sealed class FailedClientWebSocket : IClientWebSocket
 
     public Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer, CancellationToken cancellationToken) => throw new NotImplementedException();
 
-    public Task CloseOutputAsync(WebSocketCloseStatus status, string message, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public Task CloseAsync(WebSocketCloseStatus status, string message, CancellationToken cancellationToken) => throw new NotImplementedException();
 
     public WebSocketState State => WebSocketState.Closed;
 }

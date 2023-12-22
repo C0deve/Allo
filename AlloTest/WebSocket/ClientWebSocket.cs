@@ -53,7 +53,7 @@ public sealed class ClientWebSocket : IClientWebSocket
         return new WebSocketReceiveResult(bytes.Length, WebSocketMessageType.Text, true);
     }
 
-    public async Task CloseOutputAsync(WebSocketCloseStatus status, string message, CancellationToken cancellationToken)
+    public async Task CloseAsync(WebSocketCloseStatus status, string message, CancellationToken cancellationToken)
     {
         await _mainCancellationTokenSource.CancelAsync();
         State = WebSocketState.Closed;

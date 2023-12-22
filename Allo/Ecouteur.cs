@@ -64,7 +64,7 @@ internal sealed class Ecouteur(IClientWebSocket clientWebSocket, Executeur execu
     public async ValueTask DisposeAsync()
     {
         if(clientWebSocket.State == WebSocketState.Open)
-            await clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+            await clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
         
         clientWebSocket.Dispose();
     }

@@ -13,8 +13,8 @@ internal class ClientWebSocketWrapper(ClientWebSocket clientWebSocket) : IClient
     public Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer, CancellationToken cancellationToken) => 
         clientWebSocket.ReceiveAsync(buffer, cancellationToken);
 
-    public Task CloseOutputAsync(WebSocketCloseStatus status, string message, CancellationToken cancellationToken) =>
-        clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+    public Task CloseAsync(WebSocketCloseStatus status, string message, CancellationToken cancellationToken) =>
+        clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
 
     public WebSocketState State => clientWebSocket.State;
 }
