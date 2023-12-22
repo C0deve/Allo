@@ -12,7 +12,7 @@ public sealed class EcouteurPermanent : IAsyncDisposable
 {
     private readonly Func<IClientWebSocket> _clientWebSocketFactory;
     private readonly IPolitiqueDeTemporisation _politiqueDeTemporisation;
-    private CancellationTokenSource? _delayCancellationTokenSource;
+    private CancellationTokenSource? _temporisationCancellationTokenSource;
     private readonly Executeur _executeur;
     private readonly CancellationTokenSource _mainCancellationTokenSource = new();
     private readonly Task _taskBouclePrincipale;
@@ -32,11 +32,11 @@ public sealed class EcouteurPermanent : IAsyncDisposable
         var nbTentatives = 0;
         while (!mainCancellationToken.IsCancellationRequested)
         {
-            using var delayCancellationTokenSource = new CancellationTokenSource();
-            _delayCancellationTokenSource = delayCancellationTokenSource;
+            using var temporisationCancellationTokenSource = new CancellationTokenSource();
+            _temporisationCancellationTokenSource = temporisationCancellationTokenSource;
 
-            using var createLinkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(delayCancellationTokenSource.Token, mainCancellationToken);
-            await TemporiseEntreDeuxTentativesAsync(nbTentatives, createLinkedTokenSource);
+            using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(temporisationCancellationTokenSource.Token, mainCancellationToken);
+            await TemporiseEntreDeuxTentativesAsync(nbTentatives, linkedTokenSource.Token);
 
             await using var ecouteur = new Ecouteur(_clientWebSocketFactory(), _executeur);
             _ecouteur = ecouteur;
@@ -46,11 +46,11 @@ public sealed class EcouteurPermanent : IAsyncDisposable
         }
     }
 
-    private async Task TemporiseEntreDeuxTentativesAsync(int nbTentatives, CancellationTokenSource linkedTokenSource)
+    private async Task TemporiseEntreDeuxTentativesAsync(int nbTentatives, CancellationToken linkedToken)
     {
         try
         {
-            await Task.Delay(_politiqueDeTemporisation.GetTemporisation(nbTentatives), linkedTokenSource.Token).ConfigureAwait(false);
+            await Task.Delay(_politiqueDeTemporisation.GetTemporisation(nbTentatives), linkedToken).ConfigureAwait(false);
         }
         catch (OperationCanceledException)
         {
@@ -59,8 +59,8 @@ public sealed class EcouteurPermanent : IAsyncDisposable
 
     public async Task RelancerLEcouteAsync()
     {
-        if (_delayCancellationTokenSource != null)
-            await _delayCancellationTokenSource.CancelAsync();
+        if (_temporisationCancellationTokenSource != null)
+            await _temporisationCancellationTokenSource.CancelAsync();
 
         if (_ecouteur != null)
             await _ecouteur.DisposeAsync();
@@ -76,6 +76,6 @@ public sealed class EcouteurPermanent : IAsyncDisposable
 
         await _taskBouclePrincipale.ConfigureAwait(false);
         _mainCancellationTokenSource.Dispose();
-        _delayCancellationTokenSource?.Dispose();
+        _temporisationCancellationTokenSource?.Dispose();
     }
 }
