@@ -1,7 +1,5 @@
 ﻿using System.Net.WebSockets;
 using Allo;
-using AlloTest.WebSocket;
-using ClientWebSocket = AlloTest.WebSocket.ClientWebSocket;
 
 namespace AlloTest;
 
