@@ -1,5 +1,5 @@
 ﻿using System.Net.WebSockets;
-using SampleConsoleApp;
+using AlloConsoleApp;
 using Allo;
 
 var count = 0;

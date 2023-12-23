@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlloTest", "AlloTest\AlloTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Allo", "Allo\Allo.csproj", "{D735EC2F-D248-4E4D-9FCF-2285F2DB776C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleConsoleApp", "SampleConsoleApp\SampleConsoleApp.csproj", "{B6115614-107B-4464-99F1-AC95AE0946CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlloConsoleApp", "AlloConsoleApp\AlloConsoleApp.csproj", "{B6115614-107B-4464-99F1-AC95AE0946CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

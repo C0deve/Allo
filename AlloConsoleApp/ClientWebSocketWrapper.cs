@@ -1,7 +1,7 @@
 ﻿using System.Net.WebSockets;
 using Allo;
 
-namespace SampleConsoleApp;
+namespace AlloConsoleApp;
 
 internal class ClientWebSocketWrapper(ClientWebSocket clientWebSocket) : IClientWebSocket
 {

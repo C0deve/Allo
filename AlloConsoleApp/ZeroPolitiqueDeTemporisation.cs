@@ -1,6 +1,6 @@
 ﻿using Allo;
 
-namespace SampleConsoleApp;
+namespace AlloConsoleApp;
 
 public class ZeroPolitiqueDeTemporisation : IPolitiqueDeTemporisation
 {
